@@ -4,8 +4,8 @@ import { Link, useLocation } from 'react-router-dom';
 const NavLinks = () => {
   const links = [
     { name: 'Find Job', url: 'find-job' },
-    { name: 'Find Candidate', url: 'find-candidate' },
-    { name: 'Upload Job', url: 'upload-job' },
+    { name: 'Find Talent', url: 'find-talent' },
+    { name: 'Post Job', url: 'post-job' },
     { name: 'About Us', url: 'about-us' },
   ];
   const location = useLocation();

@@ -22,7 +22,7 @@ const JobCard = ({ jobTitle, company, applicants, experience, jobType, location,
             <div>{jobType}</div>
             <div>{location}</div>
         </div>
-        <Text lineClamp={3} className='!text-xs !text-hustify !text-mine-shaft-300'>
+        <Text lineClamp={3} className='!text-xs !text-justify !text-mine-shaft-300'>
             {description}
         </Text>
         <Divider size='xs' color='mine-shaft.7' orientation="horizontal" />

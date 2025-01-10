@@ -8,6 +8,9 @@ import FindJobs from './Pages/FindJobs';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Header from './Header/Header';
 import Footer from './LeandingPage/Footer';
+import FindTalent from './Pages/FindTalent';
+import TalentProfileMatch from './Pages/TalentProfileMatch';
+import PostJobs from './Pages/PostJobs';
 // Define your custom theme here
 const theme = createTheme({
   colors: {
@@ -38,7 +41,10 @@ const theme = createTheme({
       '#461902', // 950
     ],
   },
+  focusRing:"never",
   fontFamily: 'poppins, sans-serif',
+  primaryColor:"bright-sun",
+  primaryShade:4,
 });
 
 function App() {
@@ -48,6 +54,9 @@ function App() {
       <Header/>
         <Routes>
           <Route path="/find-job" element={<FindJobs />} />
+          <Route path="/find-talent" element={<FindTalent />} />
+          <Route path="/talent-profile" element={<TalentProfileMatch/>} />
+          <Route path="/post-job" element={<PostJobs/>} />
           <Route path="*" element={<HomePage />} />
         </Routes>
       <Footer/>

@@ -3,11 +3,11 @@ import { Checkbox, Combobox, Group, Input, Pill, PillsInput, useCombobox } from 
 import React from 'react';
 import { IconSelector } from '@tabler/icons-react';
 
-
-function MultiSelectCreatable(props:any) {
+function MultiSelectCreatable(props: any) {
   useEffect(() => {
     setData(props.options);
-  }, [props]); 
+  }, [props]);
+
   const combobox = useCombobox({
     onDropdownClose: () => combobox.resetSelectedOption(),
     onDropdownOpen: () => combobox.updateSelectedOptionIndex('active'),
@@ -34,6 +34,7 @@ function MultiSelectCreatable(props:any) {
 
   const handleValueRemove = (val: string) =>
     setValue((current) => current.filter((v) => v !== val));
+
   const MAX_DISPLAYED_VALUES = 2;
   const values = value
     .slice(
@@ -47,30 +48,31 @@ function MultiSelectCreatable(props:any) {
     ));
 
   const options = data
-  .filter((item) => item.toLowerCase().includes(search.trim().toLowerCase()))
-  .map((item) => (
-    <Combobox.Option value={item} key={item} active={value.includes(item)}>
-      <Group gap="sm">
-        <Checkbox
-          size="xs"
-          color="bright-sun.4"
-          checked={value.includes(item)}
-          onChange={() => {}}
-          aria-hidden
-          tabIndex={-1}
-          style={{ pointerEvents: 'none' }}
-        />
-        <span className='text-mine-shaft-300'>{item}</span>
-      </Group>
-    </Combobox.Option>
-  ));
+    .filter((item) => item.toLowerCase().includes(search.trim().toLowerCase()))
+    .map((item) => (
+      <Combobox.Option value={item} key={item} active={value.includes(item)}>
+        <Group gap="sm">
+          <Checkbox
+            size="xs"
+            color="bright-sun.4"
+            checked={value.includes(item)}
+            onChange={() => handleValueSelect(item)}
+            aria-hidden
+            tabIndex={-1}
+            style={{ pointerEvents: 'none' }}
+          />
+          <span className="text-mine-shaft-300">{item}</span>
+        </Group>
+      </Combobox.Option>
+    ));
 
   return (
     <Combobox store={combobox} onOptionSubmit={handleValueSelect} withinPortal={false}>
       <Combobox.DropdownTarget>
         <div>
           <PillsInput
-          pointer onClick={() => combobox.toggleDropdown()}
+            pointer
+            onClick={() => combobox.toggleDropdown()}
             variant="unstyled"
             rightSection={<IconSelector />}
             leftSection={
@@ -80,27 +82,29 @@ function MultiSelectCreatable(props:any) {
             }
           >
             <Pill.Group>
-            {value.length > 0 ? (
-              <>
-                {values}
-                {value.length > MAX_DISPLAYED_VALUES && (
-                  <Pill>+{value.length - (MAX_DISPLAYED_VALUES - 1)} more</Pill>
-                )}
-              </>
-            ) : (
-              <Input.Placeholder className='!text-mine-shaft-300'>{props.title}</Input.Placeholder>
-            )}
+              {value.length > 0 ? (
+                <>
+                  {values}
+                  {value.length > MAX_DISPLAYED_VALUES && (
+                    <Pill>+{value.length - (MAX_DISPLAYED_VALUES - 1)} more</Pill>
+                  )}
+                </>
+              ) : (
+                <Input.Placeholder className="!text-mine-shaft-300">
+                  {props.title}
+                </Input.Placeholder>
+              )}
             </Pill.Group>
           </PillsInput>
         </div>
       </Combobox.DropdownTarget>
 
       <Combobox.Dropdown>
-      <Combobox.Search
-            value={search}
-            onChange={(event) => setSearch(event.currentTarget.value)}
-            placeholder={props.title}
-          />
+        <Combobox.Search
+          value={search}
+          onChange={(event) => setSearch(event.currentTarget.value)}
+          placeholder={props.title}
+        />
         <Combobox.Options>
           {options}
 
