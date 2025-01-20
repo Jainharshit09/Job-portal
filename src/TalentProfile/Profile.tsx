@@ -11,7 +11,6 @@ const Profile =(props:any) => {
             <img className='h-48 w-48 rounded-full -bottom-1/3 absolute left-3 border-8 border-mine-shaft-950 text-justify' src='/avatar.png' alt='banner'></img>
         </div>
         <div className='px-3 mt-16'>
-
                 <div className='flex justify-between text-3xl font-semibold'>{props.name}
                 <Button color="bright-sun.4" variant="light">
                       Message

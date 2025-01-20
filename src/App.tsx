@@ -1,8 +1,9 @@
 import React from 'react';
-import {createTheme,  MantineProvider } from '@mantine/core';
+import {createTheme,  Divider,  MantineProvider } from '@mantine/core';
 import './App.css';
 import '@mantine/core/styles.css';
 import '@mantine/carousel/styles.css';
+import '@mantine/tiptap/styles.css';
 import HomePage from './Pages/HomePage';
 import FindJobs from './Pages/FindJobs';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
@@ -11,6 +12,12 @@ import Footer from './LeandingPage/Footer';
 import FindTalent from './Pages/FindTalent';
 import TalentProfileMatch from './Pages/TalentProfileMatch';
 import PostJobs from './Pages/PostJobs';
+import JobDescPage from './Pages/JobDescPage';
+import ApplyJobPage from './Pages/ApplyJobPage';
+import CompanyPage from './Pages/CompanyPage';
+import PostedJob from './Pages/PostedJob';
+import AboutUs from './Pages/AboutUs';
+import '@mantine/dates/styles.css';
 // Define your custom theme here
 const theme = createTheme({
   colors: {
@@ -40,6 +47,19 @@ const theme = createTheme({
       '#7a330d', // 900
       '#461902', // 950
     ],
+    // 'java': [
+    //     '#effefc',
+    //     '#c7fff8',
+    //     '#90fff1',
+    //     '#51f7e9',
+    //     '#1de4d9',
+    //     '#04c8c0',
+    //     '#00b2af',
+    //     '#05807f',
+    //     '#0a6465',
+    //     '#0d5454',
+    //     '#003033',
+    // ],
   },
   focusRing:"never",
   fontFamily: 'poppins, sans-serif',
@@ -51,15 +71,23 @@ function App() {
   return (
     <MantineProvider defaultColorScheme='dark' theme={theme}>
       <BrowserRouter>
+      <div className='relative'>
       <Header/>
+      <Divider mx="md" size="xs" color="mine-shaft.7"/>
         <Routes>
           <Route path="/find-job" element={<FindJobs />} />
           <Route path="/find-talent" element={<FindTalent />} />
           <Route path="/talent-profile" element={<TalentProfileMatch/>} />
           <Route path="/post-job" element={<PostJobs/>} />
+          <Route path="/jobs" element={<JobDescPage/>} />
+          <Route path="/apply-job" element={<ApplyJobPage/>} />
+          <Route path="/company-page" element={<CompanyPage/>} />
+          <Route path="/posted-job" element={<PostedJob/>} />
+          <Route path="/about-us" element={<AboutUs/>} />
           <Route path="*" element={<HomePage />} />
         </Routes>
       <Footer/>
+      </div>
       </BrowserRouter>
     </MantineProvider>
   );

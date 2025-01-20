@@ -1,24 +1,10 @@
-import { Button, Divider } from '@mantine/core'
 import React from 'react'
-import { Link } from 'react-router-dom'
-import { IconArrowLeft } from '@tabler/icons-react'
-import RecommendTalent from '../TalentProfile/RecommendTalent'
-import Profile from '../TalentProfile/Profile'
-import { profile } from '../Data/TalentData'
+import PostJob from '../PostJob/PostJob'
 
 const PostJobs = () => {
     return (
-        <div className='min-h-[100vh] bg-mine-shaft-900 font-[popins] p-4' >
-            <Divider size='xs' color='mine-shaft.8' orientation="horizontal" />
-            <Link className='my-4 inline-block' to="/find-talent">
-                <Button leftSection={<IconArrowLeft size={20}/>} color="bright-sun.4" variant="light">
-                    Back
-                </Button>
-            </Link>
-            <div className='flex gap-5'>
-                <Profile {...profile}/>
-                <RecommendTalent/>
-            </div>
+        <div className='min-h-[100vh] bg-mine-shaft-900 font-[poppins] p-4' >
+            <PostJob/>
     </div>
     )
 }
