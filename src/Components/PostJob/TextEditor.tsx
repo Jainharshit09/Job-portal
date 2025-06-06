@@ -6,9 +6,8 @@ import Underline from '@tiptap/extension-underline';
 import TextAlign from '@tiptap/extension-text-align';
 import Superscript from '@tiptap/extension-superscript';
 import SubScript from '@tiptap/extension-subscript';
-import React from 'react';
-import { content } from '../../Data/PostJob';
-const TextEditor= () =>{
+import React, { useEffect } from 'react';
+const TextEditor = (props:any) => {
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -19,8 +18,16 @@ const TextEditor= () =>{
       Highlight,
       TextAlign.configure({ types: ['heading', 'paragraph'] }),
     ],
-    content,
+    content: props.form?.getValues()?.description || '',  
+    onUpdate: ({ editor }) => {
+      props.form?.setFieldValue('description', editor.getHTML()); 
+    },
   });
+
+  useEffect(() => {
+      editor?.commands.setContent(props.data);
+  }, [props.data, editor]);
+
 
   return (
     <RichTextEditor editor={editor}>
@@ -69,6 +76,6 @@ const TextEditor= () =>{
       <RichTextEditor.Content bg="mine-shaft.10"/>
     </RichTextEditor>
   );
-}
+};
 
 export default TextEditor;

@@ -3,15 +3,15 @@ import { IconWebhook, IconBrandInstagram, IconBrandFacebook, IconBrandX } from '
 import { useLocation } from 'react-router-dom';
 
 const Footer = () => {
-  const location=useLocation();
-  if (location.pathname === "/signup" || location.pathname === "/login" ) return null;
+  const location = useLocation();
+  if (location.pathname === "/signup" || location.pathname === "/login") return null;
 
-  return  (
-    <div className="flex pt-10  text-xl justify-center  bg-mine-shaft-900 font-[popins]">
-      <div className="text-mine-shaft-300 py-10 items-center">
-        <div className="flex justify-between px-16">
+  return (
+    <div className="flex flex-col pt-10 text-xl justify-center bg-mine-shaft-900 font-[popins]">
+      <div className="text-mine-shaft-300 py-10 items-center w-full">
+        <div className="flex flex-wrap justify-between px-5 md:px-16 gap-10">
           {/* Left Section */}
-          <div className="w-[40%]"> {/* Adjusted width to wrap text */}
+          <div className="w-full md:w-[40%]">
             <div className="flex items-center gap-2 text-bright-sun-400 text-xl font-semibold hover:text-bright-sun-400 cursor-pointer transform hover:translate-x-1">
               <IconWebhook size={24} />
               JobHook
@@ -36,14 +36,14 @@ const Footer = () => {
           </div>
 
           {/* Middle Sections */}
-          <div>
+          <div className="w-full sm:w-auto">
             <div className="text-bright-sun-400 font-semibold mb-2">Product</div>
             <div className="text-mine-shaft-300 hover:text-bright-sun-400 cursor-pointer transform hover:translate-x-1">Find Job</div>
             <div className="text-mine-shaft-300 hover:text-bright-sun-400 cursor-pointer transform hover:translate-x-1">Find Company</div>
             <div className="text-mine-shaft-300 hover:text-bright-sun-400 cursor-pointer transform hover:translate-x-1">Find Employee</div>
           </div>
 
-          <div>
+          <div className="w-full sm:w-auto">
             <div className="text-bright-sun-400 font-semibold mb-2">Company</div>
             <div className="text-mine-shaft-300 hover:text-bright-sun-400 cursor-pointer transform hover:translate-x-1">About Us</div>
             <div className="text-mine-shaft-300 hover:text-bright-sun-400 cursor-pointer transform hover:translate-x-1">Contact Us</div>
@@ -51,7 +51,7 @@ const Footer = () => {
             <div className="text-mine-shaft-300 hover:text-bright-sun-400 cursor-pointer transform hover:translate-x-1">Terms & Conditions</div>
           </div>
 
-          <div>
+          <div className="w-full sm:w-auto">
             <div className="text-bright-sun-400 font-semibold mb-2">Support</div>
             <div className="text-mine-shaft-300 hover:text-bright-sun-400 cursor-pointer transform hover:translate-x-1">Help & Support</div>
             <div className="text-mine-shaft-300 hover:text-bright-sun-400 cursor-pointer transform hover:translate-x-1">Feedback</div>

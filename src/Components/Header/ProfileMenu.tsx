@@ -5,6 +5,7 @@ import { Menu } from '@mantine/core'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { removeUser } from '../../Slice/UserSlice'
+import { removeJwt } from '../../Slice/JwtSlice'
 
 const ProfileMenu = () => {
     const [checked, setChecked] = useState(false);
@@ -16,14 +17,16 @@ const ProfileMenu = () => {
     const handleLogout=()=>{
         console.log("Logged Out");
         dispatch(removeUser());
+        dispatch(removeJwt())
     }
+    const profile = useSelector((state: any) => state.profile);
     return (
         <div>
             <Menu opened={opened} onChange={setOpened} shadow="md" width={200}>
         <Menu.Target>
             <div className='flex gap-2 items-center'>
-                            <div>{user.name}</div>
-                            <Avatar src="avatar.png" alt="it's me" />
+                            <div className='xs-mx:hidden'>{user.name}</div>
+                            <Avatar src={profile.picture ? `data:image/jpeg;base64,${profile.picture}` : '/avatar.png'} alt="it's me" />
                         </div>
         </Menu.Target>
 

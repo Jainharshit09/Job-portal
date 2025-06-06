@@ -1,25 +1,33 @@
 import React, { useState } from 'react';
 import { Combobox, useCombobox } from '@mantine/core';
 import { IconAdjustments } from '@tabler/icons-react';
+import { useDispatch } from 'react-redux';
+import { updateSort } from '../../Slice/SortSlice';
 
-const opt = ['Relevance', 'Most Recent', 'Salary(Low to high)', 'Salary(High to low)'];
+const opt = ['Relevance', 'Most Recent', 'Salary(Low to High)', 'Salary(High to Low)'];
+const tanlent_sort=['Relevance', 'Experience(Low to High)', 'Experience(High to Low)'];
 
-function Sort() {
+function Sort(props:any) {
   const [selectedItem, setSelectedItem] = useState<string | null>('Relevance');
+  const dispatch = useDispatch();
   const combobox = useCombobox({
     onDropdownClose: () => combobox.resetSelectedOption(),
   });
 
-  const options = opt.map((item) => (
+  const options = props.sort==="job"?opt.map((item) => (
     <Combobox.Option className='!text-xs' value={item} key={item}>
       {item}
     </Combobox.Option>
-  ));
+  )):tanlent_sort.map((item) => (
+    <Combobox.Option className='!text-xs' value={item} key={item}>
+      {item}
+    </Combobox.Option>));
+
 
   // Toggle dropdown
   function handleinput() {
     combobox.toggleDropdown(); // Add parentheses to call the function
-  }
+  } 
 
   return (
     <>
@@ -29,6 +37,7 @@ function Sort() {
         position="bottom-start"
         onOptionSubmit={(val) => {
           setSelectedItem(val);
+          dispatch(updateSort(val));
           combobox.closeDropdown();
         }}
       >

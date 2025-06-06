@@ -1,31 +1,29 @@
-import axios from 'axios'
-
-const base_url = 'http://localhost:8080/users/'
+import axiosInstance from "../Interceptor/axiosInterceptor";
 
 const registerUser = async (user: any) => {
-    return axios.post(`${base_url}register`, user) 
+    return axiosInstance.post(`/users/register`, user) 
     .then(res => res.data)
     .catch(err => { throw err; });
 }
 
 const loginUser = async (login: any) => {
-    return axios.post(`${base_url}login`, login) 
+    return axiosInstance.post(`/users/login`, login) 
     .then(res => res.data)
     .catch(err => { throw err; });
 }
 
 const sendOtp = async (email: any) => {
-    return axios.post(`${base_url}sendOtp/${email}`) 
+    return axiosInstance.post(`/users/sendOtp/${email}`) 
     .then(res => res.data)
     .catch(err => { throw err; });
 }
 const verfiyOtp = async (email:any,otp: any) => {
-    return axios.get(`${base_url}verifyOtp/${email}/${otp}`) 
+    return axiosInstance.get(`/users/verifyOtp/${email}/${otp}`) 
     .then(res => res.data)
     .catch(err => { throw err; });
 }
 const changePassword=async(email:any,password:any)=>{
-    return axios.post(`${base_url}changePassword`,{email,password})
+    return axiosInstance.post(`/users/changePassword`,{email,password})
     .then(res=>res.data)
     .catch(err=>{throw err;});
 }

@@ -4,6 +4,7 @@ import React from 'react'
 import AboutComp from './AboutComp'
 import CompanyJob from './CompanyJob'
 import CompanyEmployee from './CompanyEmployee'
+import CompanyLogo from '../CompanyLogo'
 
 const Company = (props:any) => {
   
@@ -11,7 +12,9 @@ const Company = (props:any) => {
     <div className='w-3/4'>
         <div className='relative'>
             <img className='rounded-t-2xl' src='/Profile/banner.jpg' alt='banner'></img>
-            <img className='h-36 w-36 bg-mine-shaft-900 rounded-3xl -bottom-1/4 p-2 absolute left-5 border-8 border-mine-shaft-900 text-justify' src='/Icons/Google.png' alt='banner'></img>
+            <div className='h-36 w-36 bg-mine-shaft-900 rounded-3xl -bottom-1/4 p-2 absolute left-5 border-8 border-mine-shaft-900 text-justify'>
+            <CompanyLogo company={props.company} />
+            </div>
         </div>
         <div className='px-3 mt-12'>
                 <div className='flex justify-between text-3xl font-semibold'>{props.name}

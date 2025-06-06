@@ -55,7 +55,7 @@ const DreamJob = () => {
                 </div>
                 <div className=' h-10 w-30 text-sm text-mine-shaft-100'>
                     <div>Software Engineer</div>
-                    <div text-mine-shaft-200 text-xs>New York </div>
+                    <div className="text-mine-shaft-200 text-xs">New York </div>
                 </div>
             </div>
             <div className='flex gap-2 justify-around mt-3 text-mine-shaft-200 text-xs'>

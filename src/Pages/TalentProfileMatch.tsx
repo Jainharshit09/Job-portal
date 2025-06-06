@@ -1,24 +1,35 @@
 import { Button } from '@mantine/core'
 import { IconArrowLeft } from '@tabler/icons-react';
-import React from 'react'
-import { Link } from 'react-router-dom';
-import Profile from '../TalentProfile/Profile';
+import React, { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom';
+import Profile from '../Components/TalentProfile/Profile';
 import { profile } from '../Data/TalentData';
-import RecommendTalent from '../TalentProfile/RecommendTalent';
+import RecommendTalent from '../Components/TalentProfile/RecommendTalent';
+import ProfileService from '../Services/ProfileService';
+
 
 
 
 const TalentProfileMatch = () => {
+    const navigate = useNavigate();
+    const[talentId, setTalentId] = React.useState<any[]>([]);
+    useEffect(() => { 
+        ProfileService.getAllProfiles().then((res: any) => {
+            setTalentId(res);
+        }).catch((err: any) => {
+            console.log(err);
+        }
+        )
+    },[talentId])
     return (
         <div className='min-h-[100vh] bg-mine-shaft-900 font-[poppins] p-4' >
-            <Link className='my-4 inline-block' to="/find-talent">
-                <Button leftSection={<IconArrowLeft size={20}/>} color="bright-sun.4" variant="light">
+                <Button onClick={()=>navigate(-1)} leftSection={<IconArrowLeft size={20}/>} my="sm" color="bright-sun.4" variant="light">
                     Back
                 </Button>
-            </Link>
+           
             <div className='flex gap-5'>
                 <Profile {...profile}/>
-                <RecommendTalent/>
+                <RecommendTalent talents={talentId}/>
             </div>
     </div>
     )

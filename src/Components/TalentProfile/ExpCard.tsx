@@ -1,5 +1,7 @@
 import React from 'react'
 import {IconMapPin } from '@tabler/icons-react'
+import Utilites from '../../Services/Utilites'
+import CompanyLogo from '../CompanyLogo'
 
 
 const ExpCard= (props:any) => {
@@ -8,7 +10,7 @@ const ExpCard= (props:any) => {
           <div className='flex justify-between'>
               <div className='flex gap-2  items-center'>
                   <div className='p-2 bg-mine-shaft-600 rounded-md'>
-                      <img className='h-7' src={`/Icons/${props.company}.png`} alt={props.company} />
+                  <CompanyLogo company={props.company} />
                   </div>
                   <div className='p-1'>
                       <div className='font-semibold text-lg '>{props.title}</div>
@@ -16,7 +18,8 @@ const ExpCard= (props:any) => {
                   </div>
               </div>
               <div className='text-sm text-min-shaft-300'>
-               {props.startDate}-{props.endDate}
+              {Utilites.formatDate((props.startDate))} -{" "}
+              {props.endDate ? Utilites.formatDate((props.endDate)) : "Present"}
               </div>
           </div>
           <div className='text-justify text-sm text-mine-shaft-300'>

@@ -1,100 +1,111 @@
 import { Button, LoadingOverlay, PasswordInput, TextInput } from '@mantine/core'
 import { IconX, IconCheck } from '@tabler/icons-react'
-import React, { useState } from 'react'
+import React, {  useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import UserService from '../../Services/UserService'
 import { notifications } from '@mantine/notifications'
 import ResetPass from './ResetPass'
 import { useDisclosure } from '@mantine/hooks'
 import { useDispatch } from 'react-redux'
+import AuthService from '../../Services/AuthService'
+import { setJwt } from '../../Slice/JwtSlice'
+import { jwtDecode } from 'jwt-decode'
 import { setUser } from '../../Slice/UserSlice'
+import NotificationClass from '../../Services/NotificationClass'
 
-const form = {
+const initialFormState = {
     email: "",
     password: "",
-}
+};
+
 const Login = () => {
-    const dispatch=useDispatch()
-    const [data, setData] = useState<{ [key: string]: string }>(form);
+    const dispatch = useDispatch();
+    const [data, setData] = useState(initialFormState);
     const [formError, setFormError] = useState<{ [key: string]: string }>({});
     const [opened, { open, close }] = useDisclosure(false);
     const navigate = useNavigate();
-    const [loading,setLoading]=useState(false);
+    const [loading, setLoading] = useState(false);
 
-    const handleChange = (event: any) => {
+    // Handle Input Change
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
-        setFormError({ ...formError, [name]: "" });
-        setData({ ...data, [name]: value });
-    }
-
+        setFormError((prev) => ({ ...prev, [name]: "" })); // Clear error when user types
+        setData((prev) => ({ ...prev, [name]: value }));
+    };  
+    // Validate Form Fields
     const validateForm = () => {
-        let valid = true;
+        let isValid = true;
         let newFormError: { [key: string]: string } = {};
 
-        if (!data.email) {
+        if (!data.email.trim()) {
             newFormError.email = "Email is required";
-            valid = false;
+            isValid = false;
         }
 
-        if (!data.password) {
+        if (!data.password.trim()) {
             newFormError.password = "Password is required";
-            valid = false;
+            isValid = false;
         }
 
         setFormError(newFormError);
-        return valid;
-    }
+        return isValid;
+    };
 
-    const handleSubmit = (event: any) => {
+    // Handle Login Submission
+    const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
         setLoading(true);
-        const isValid = validateForm();
 
-        if (isValid) {
-            UserService.loginUser(data)
-                .then((res: any) => {
-                    notifications.show({
-                        position: 'top-center',
-                        icon: <IconCheck style={{ width: "90%", height: "90%" }} />,
-                        color: "teal",
-                        withCloseButton: true,
-                        withBorder: true,
-                        className: '!border-teal-800',
-                        autoClose: 1000,
-                        title: 'Logged in Successfully',
-                        message: 'Redirecting to home page... 🎉',
-                    });
-                    setTimeout(() => {
-                        dispatch(setUser(res    ));
-                        navigate('/home');
-                    }, 1000);
-                })
-                .catch((err: any) => {
-                    setLoading(false);
-                    notifications.show({
-                        position: 'top-center',
-                        icon: <IconX style={{ width: "90%", height: "90%" }} />,
-                        color: "red.8",
-                        withCloseButton: true,
-                        withBorder: true,
-                        className: '!border-red-800',
-                        autoClose: 2000,
-                        title: 'Login Failed',
-                        message: err.response.data.errorMessage || "Invalid credentials.",
-                    });
-                });
-        } else {
+        if (!validateForm()) {
             setLoading(false);
             notifications.show({
                 position: 'top-center',
                 icon: <IconX style={{ width: "90%", height: "90%" }} />,
-                color: "red.8",
-                withCloseButton: true,
-                withBorder: true,
-                className: '!border-red-800',
-                autoClose: 2000,
+                color: "red",
                 title: 'Login Failed',
-                message: "Please fill credentials  correctly.",
+                message: "Please fill in credentials correctly.",
+                autoClose: 2000,
+            });
+            return;
+        }
+
+        try {
+            const res = await AuthService.loginUser(data);
+            if (!res.jwt) throw new Error("JWT not received!");
+
+            // Show success notification
+            notifications.show({
+                position: 'top-center',
+                icon: <IconCheck style={{ width: "90%", height: "90%" }} />,
+                color: "teal",
+                title: 'Logged in Successfully',
+                message: 'Redirecting to home page... 🎉',
+                autoClose: 1000,
+            });
+
+            // Save JWT
+            dispatch(setJwt(res.jwt));
+
+            // Decode Token & Save User Data
+            try {
+                const decoded = jwtDecode(res.jwt);
+                dispatch(setUser({ ...decoded, email: decoded.sub }));
+            } catch (error) {
+                console.error("JWT Decoding Failed:", error);
+                NotificationClass.errorNotification("JWT Decoding Failed", "Failed to decode JWT.");
+            }
+
+            // Redirect after successful login
+            setTimeout(() => navigate('/home'), 1000);
+        } catch (err: any) {
+            console.error("Login Error:", err);
+            setLoading(false);
+            notifications.show({
+                position: 'top-center',
+                icon: <IconX style={{ width: "90%", height: "90%" }} />,
+                color: "red",
+                title: 'Login Failed',
+                message: "Invalid credentials.",
+                autoClose: 2000,
             });
         }
     };
@@ -102,14 +113,15 @@ const Login = () => {
     return (
         <>
             <LoadingOverlay
-            visible={loading}
-            zIndex={1000}
-            overlayProps={{ radius: 'sm', blur: 1 }}
-            loaderProps={{ color: 'bright-sun.4', type: 'bars' }}
+                visible={loading}
+                zIndex={1000}
+                overlayProps={{ radius: 'sm', blur: 1 }}
+                loaderProps={{ color: 'bright-sun.4', type: 'bars' }}
             />
 
             <div className="w-1/2 px-20 flex flex-col gap-3 justify-center">
                 <div className="text-2xl font-semibold">Login</div>
+                
                 <TextInput
                     withAsterisk
                     label="Email"
@@ -119,6 +131,7 @@ const Login = () => {
                     error={formError.email}
                     placeholder="Enter Your Email"
                 />
+                
                 <PasswordInput
                     withAsterisk
                     label="Password"
@@ -128,21 +141,29 @@ const Login = () => {
                     error={formError.password}
                     placeholder="Enter Your Password"
                 />
-                <Button onClick={handleSubmit} loading={loading} autoContrast variant="filled">Login</Button>
+                
+                <Button onClick={handleSubmit} loading={loading} autoContrast variant="filled">
+                    Login
+                </Button>
+
                 <div className="mx-auto">
                     Don't have an account?{' '}
                     <span
-                        onClick={() => { navigate('/signup'); setData(form); }}
+                        onClick={() => { navigate('/signup'); setData(initialFormState); }}
                         className="text-bright-sun-400 hover:underline cursor-pointer"
                     >
                         Sign up
                     </span>
                 </div>
-                <div className='text-bright-sun-400 hover:underline cursor-pointer text-center' onClick={open}>Forget Password</div>
+
+                <div className='text-bright-sun-400 hover:underline cursor-pointer text-center' onClick={open}>
+                    Forgot Password?
+                </div>
             </div>
+
             <ResetPass opened={opened} close={close} />
         </>
-    )
-}
+    );
+};
 
 export default Login;

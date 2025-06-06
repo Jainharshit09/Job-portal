@@ -4,7 +4,9 @@ import { Combobox, InputBase, ScrollArea, useCombobox } from '@mantine/core';
 const SelectInput = (props: any) => {
   useEffect(() => {
     setData(props.options);
-  }, [props.options]);
+    setValue(props.form.getInputProps(props.name).value);
+    setSearch(props.form.getInputProps(props.name).value);
+  }, [props.options,props.form, props.name,props]);
 
   const combobox = useCombobox({
     onDropdownClose: () => combobox.resetSelectedOption(),
@@ -17,7 +19,7 @@ const SelectInput = (props: any) => {
   const exactOptionMatch = data.some((item) => item === search);
   const filteredOptions = exactOptionMatch
     ? data
-    : data.filter((item) => item.toLowerCase().includes(search.toLowerCase().trim()));
+    : data.filter((item) => item.toLowerCase().includes(search?.toLowerCase().trim()));
 
   const options = filteredOptions.map((item) => (
     <Combobox.Option value={item} key={item}>
@@ -33,21 +35,22 @@ const SelectInput = (props: any) => {
         if (val === '$create') {
           setData((current) => [...current, search]);
           setValue(search);
+          props.form.setFieldValue(props.name,search);
         } else {
           setValue(val);
           setSearch(val);
+          props.form.setFieldValue(props.name,val );
         }
 
         combobox.closeDropdown();
       }}
     >
       <Combobox.Target>
-        <div>
-          <label>
-            {props.label} <span style={{ color: 'red' }}>*</span>
-          </label>
+        <div className='!xs-mx:w-full'>
           <InputBase
-          className='[&_input]:font-medium'
+          label={props.label}
+          withAsterisk
+          {...props.form.getInputProps(props.name)}
             rightSection={<Combobox.Chevron />}
             value={search}
             onChange={(event) => {
@@ -71,7 +74,7 @@ const SelectInput = (props: any) => {
         <Combobox.Options>
         <ScrollArea.Autosize mah={180} type="scroll">
           {options}
-          {!exactOptionMatch && search.trim().length > 0 && (
+          {!exactOptionMatch && search?.trim().length > 0 && (
             <Combobox.Option value="$create">+ Create {search}</Combobox.Option>
           )}
           </ScrollArea.Autosize>

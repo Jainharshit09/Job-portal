@@ -2,8 +2,11 @@ import { useEffect, useState } from 'react';
 import { Checkbox, Combobox, Group, Input, Pill, PillsInput, useCombobox } from '@mantine/core';
 import React from 'react';
 import { IconSelector } from '@tabler/icons-react';
+import { useDispatch } from 'react-redux';
+import { updateFilter } from '../../Slice/FilterSlice';
 
 function MultiSelectCreatable(props: any) {
+  const dispatch=useDispatch();
   useEffect(() => {
     setData(props.options);
   }, [props]);
@@ -25,15 +28,19 @@ function MultiSelectCreatable(props: any) {
     if (val === '$create') {
       setData((current) => [...current, search]);
       setValue((current) => [...current, search]);
+      dispatch(updateFilter({ [props.title]: [...value, search] }));
     } else {
       setValue((current) =>
         current.includes(val) ? current.filter((v) => v !== val) : [...current, val]
       );
+      dispatch(updateFilter({ [props.title]: value.includes(val) ? value.filter((v) => v !== val) : [...value, val] }));
     }
   };
 
-  const handleValueRemove = (val: string) =>
+  const handleValueRemove = (val: string) =>{
     setValue((current) => current.filter((v) => v !== val));
+    dispatch(updateFilter({ [props.title]: value.filter((v) => v !== val) }));
+  }
 
   const MAX_DISPLAYED_VALUES = 2;
   const values = value

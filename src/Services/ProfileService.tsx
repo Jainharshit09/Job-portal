@@ -1,16 +1,17 @@
-import axios from 'axios';
 
-const base_url = 'http://localhost:8080/profiles/';
+import axiosInstance from '../Interceptor/axiosInterceptor';
+
+
 
 interface Profile {
   id: number;
-  name: string;
+  name: string; 
   email: string;
 }
 
-const getProfile = async (id: number): Promise<Profile> => {
+const getProfile = async (id: any): Promise<Profile> => {
   try {
-    const res = await axios.get(`${base_url}get/${id}`);
+    const res = await axiosInstance.get(`/profiles/get/${id}`);
     return res.data;
   } catch (err) {
     console.error('Error fetching profile:', err);
@@ -18,9 +19,19 @@ const getProfile = async (id: number): Promise<Profile> => {
   }
 };
 
+const getAllProfiles = async () => {
+  try {
+    const res = await axiosInstance.get(`/profiles/getAll`);
+    return res.data;
+  } catch (err) {
+    console.error('Error fetching all profiles:', err);
+    throw err;
+  }
+}
+
 const updateProfile = async (profile: Profile): Promise<Profile> => {
   try {
-    const res = await axios.put(`${base_url}update`, profile);
+    const res = await axiosInstance.put(`/profiles/update`, profile);
     return res.data;
   } catch (err) {
     console.error('Error updating profile:', err);
@@ -31,6 +42,7 @@ const updateProfile = async (profile: Profile): Promise<Profile> => {
 const ProfileService = {
   getProfile,
   updateProfile,
+  getAllProfiles,
 };
 
 export default ProfileService;

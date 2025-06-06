@@ -1,12 +1,14 @@
 
 import React from 'react'
+import CompanyLogo from '../CompanyLogo';
+import Utilites from '../../Services/Utilites';
 
 const CertfCard = (props:any) => {
     return (
         <div className="flex justify-between">
             <div className="flex gap-2 items-center">
             <div className="p-2 bg-mine-shaft-800 rounded-md">
-                <img className="h-7" src={`/Icons/${props.name.split(" ")[0]}.png`} alt={props.name.split(" ")[0]} />
+            <CompanyLogo company={props.name.split(" ")[0]} />
             </div>
             <div className="flex flex-col">
                 <div className="font-semibold">{props.name}</div>
@@ -14,7 +16,7 @@ const CertfCard = (props:any) => {
             </div>
             </div>
             <div className="flex flex-col items-end ">
-            <div className="text-sm text-mine-shaft-300">{props.issueDate}</div>
+            <div className="text-sm text-mine-shaft-300">{Utilites.formatDate(props.issueDate)}</div>
             <div className="text-sm text-mine-shaft-300">{props.certificateId}</div>
             </div>
         </div>

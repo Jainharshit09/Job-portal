@@ -1,51 +1,41 @@
-import React from 'react'
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
-import Header from '../Components/Header/Header'
-import { Divider } from '@mantine/core'
-import Footer from '../Components/LeandingPage/Footer'
-import AboutUs from './AboutUs'
-import ApplyJobPage from './ApplyJobPage'
-import CompanyPage from './CompanyPage'
-import FindJobs from './FindJobs'
-import FindTalent from './FindTalent'
-import HomePage from './HomePage'
-import JobDescPage from './JobDescPage'
-import JobHistoryPage from './JobHistoryPage'
-import PostedJob from './PostedJob'
-import PostJobs from './PostJobs'
-import Profile from './Profile'
-import SignupPage from './SignupPage'
-import TalentProfileMatch from './TalentProfileMatch'
-import { useSelector } from 'react-redux'
+import React from 'react';
+import {  Route } from 'react-router-dom';
+import AboutUs from './AboutUs';
+import ApplyJobPage from './ApplyJobPage';
+import CompanyPage from './CompanyPage';
+import FindJobs from './FindJobs';
+import FindTalent from './FindTalent';
+import HomePage from './HomePage';
+import JobDescPage from './JobDescPage';
+import JobHistoryPage from './JobHistoryPage';
+import PostedJob from './PostedJob';
+import PostJobs from './PostJobs';
+import Profile from './Profile';
+import SignupPage from './SignupPage';
+import TalentProfileMatch from './TalentProfileMatch';
+import ProtectedRoutes from '../Services/ProtectedRoutes';
+import PublicRoutes from '../Services/PublicRoutes';
 
 const AppRoutes = () => {
-    const user=useSelector((state:any)=>state.user);
-  return (
-    <BrowserRouter>
-    <div className='relative'>
-    <Header/>
-    <Divider mx="md" size="xs" color="mine-shaft.7"/>
-      <Routes>
-        <Route path="/find-job" element={<FindJobs />} />
-        <Route path="/find-talent" element={<FindTalent />} />
-        <Route path="/talent-profile" element={<TalentProfileMatch/>} />
-        <Route path="/post-job" element={<PostJobs/>} />
-        <Route path="/jobs" element={<JobDescPage/>} />
-        <Route path="/apply-job" element={<ApplyJobPage/>} />
-        <Route path="/company-page" element={<CompanyPage/>} />
-        <Route path="/posted-job" element={<PostedJob/>} />
-        <Route path="/job-history" element={<JobHistoryPage/>} />
-        <Route path="/about-us" element={<AboutUs/>} />
-        <Route path="/signup" element={user ?<Navigate to="/"/>:<SignupPage/>} />
-        <Route path="/login" element={user ?<Navigate to="/"/>:<SignupPage/>} />
-        <Route path="/profile" element={<Profile/>} />
-        <Route path="*" element={<HomePage />} />
-      </Routes>
-      
-    <Footer/>
-    </div>
-    </BrowserRouter>
-  )
-}
 
-export default AppRoutes
+  return (
+    <>
+      <Route path="/find-job" element={<FindJobs />} />
+      <Route path="/find-talent" element={<FindTalent />} />
+      <Route path="/talent-profile/:id" element={<TalentProfileMatch />} />
+      <Route path="/post-job/:id" element={<ProtectedRoutes   allowedRoles={['EMPLOYEER']} childern={<PostJobs />} />} />
+      <Route path="/jobs/:id" element={<JobDescPage />} />
+      <Route path="/apply-job/:id" element={<ApplyJobPage />} />
+      <Route path="/company-page/:company" element={<CompanyPage />} />
+      <Route path="/posted-job/:id" element={<ProtectedRoutes   allowedRoles={['EMPLOYEER']} childern={<PostedJob />} />} />
+      <Route path="/job-history" element={<ProtectedRoutes   allowedRoles={['APPLICANT']} childern={<JobHistoryPage />} />} />
+      <Route path="/about-us" element={<AboutUs />} />
+      <Route path="/signup" element={<PublicRoutes children={<SignupPage />} />} />
+      <Route path="/login" element={<PublicRoutes children={<SignupPage />} />} /> 
+      <Route path="/profile" element={<Profile />} />
+      <Route path="*" element={<HomePage />} />
+    </>
+  );
+};
+
+export default AppRoutes;
