@@ -5,7 +5,6 @@ import ExpCard from './ExpCard'
 import CertfCard from './CertfCard'
 import { useParams } from 'react-router-dom'
 import ProfileService from '../../Services/ProfileService'
-import RecommendTalent from './RecommendTalent';
 
 const Profile = (props: any) => {
     const { id } = useParams();
