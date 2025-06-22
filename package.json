@@ -44,9 +44,8 @@
     "web-vitals": "^1.1.2"
   },
   "scripts": {
-    "prebuild": "npm install --legacy-peer-deps",
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "custombuild": "npm install --legacy-peer-deps && npm run build"
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
