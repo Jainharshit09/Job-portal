@@ -15,7 +15,7 @@ const Companies = () => {
             className='mx-8 px-2 py-1 hover:bg-mine-shaft-800 rounded-xl cursor-pointer sm-mx:mx-4 xsm-mx:mx-2'
           >
             <img
-              src={`/companies/${company}.png`}
+              src={`/Companies/${company}.png`}
               alt={company}
               className='h-14 w-20 sm-mx:h-10 sm-mx:w-14 xsm-mx:h-8 xsm-mx:w-10'
             />
