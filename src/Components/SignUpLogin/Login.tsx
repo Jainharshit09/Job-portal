@@ -119,7 +119,7 @@ const Login = () => {
                 loaderProps={{ color: 'bright-sun.4', type: 'bars' }}
             />
 
-            <div className="w-1/2 px-20 flex flex-col gap-3 justify-center">
+            <div className="w-1/2 sm-mx:w-full px-20 bs-mx:px-10 md-mx:px-5 flex flex-col gap-3 justify-center">
                 <div className="text-2xl font-semibold">Login</div>
                 
                 <TextInput

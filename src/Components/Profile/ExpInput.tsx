@@ -69,17 +69,17 @@ const ExpInput = ({
   }, [form, profile, add, index, dispatch, setEdit]);
 
   return (
-    <div className="flex flex-col gap-5 p-3">
-      <div className="text-lg font-semibold">{add ? 'Add' : 'Edit'} Experience</div>
+    <div className="flex flex-col gap-5 p-3 sm-mx:p-2 xsm-mx:p-1">
+      <div className="text-lg sm:text-base xsm:text-sm font-semibold">{add ? 'Add' : 'Edit'} Experience</div>
 
-      <div className="flex gap-10 [&>*]:w-1/2">
+      <div className="flex gap-10 sm-mx:gap-4 xsm-mx:gap-2 [&>*]:w-1/2 sm-mx:flex-col sm-mx:[&>*]:w-full">
         <SelectInput name="title" form={form} {...select[0]} />
         <SelectInput name="company" form={form} {...select[1]} />
       </div>
 
       <SelectInput name="location" form={form} {...select[2]} />
       <Textarea
-        className="w-full text-lg"
+        className="w-full text-lg sm:text-base xsm:text-sm"
         withAsterisk
         autosize
         label="Job Summary"
@@ -88,7 +88,7 @@ const ExpInput = ({
         {...form.getInputProps('description')}
       />
 
-      <div className="flex gap-10 [&>*]:w-1/2">
+      <div className="flex gap-10 sm-mx:gap-4 xsm-mx:gap-2 [&>*]:w-1/2 sm-mx:flex-col sm-mx:[&>*]:w-full">
         <MonthPickerInput
           {...form.getInputProps('startDate')}
           maxDate={form.values.endDate || undefined}
@@ -113,13 +113,14 @@ const ExpInput = ({
         autoContrast
         checked={form.values.working}
         onChange={(e) => form.setFieldValue('working', e.currentTarget.checked)}
+        className="text-base sm:text-sm xsm:text-xs"
       />
 
-      <div className="flex gap-5">
-        <Button color="green.8" onClick={handleSave} variant="light">
+      <div className="flex gap-5 sm-mx:gap-3 xsm-mx:gap-2 sm-mx:flex-col">
+        <Button color="green.8" onClick={handleSave} variant="light" className="sm-mx:w-full">
           Update
         </Button>
-        <Button color="red.8" variant="light" onClick={() => setEdit(false)}>
+        <Button color="red.8" variant="light" onClick={() => setEdit(false)} className="sm-mx:w-full">
           Cancel
         </Button>
       </div>

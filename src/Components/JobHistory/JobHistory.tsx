@@ -71,14 +71,14 @@ const JobHistory = () => {
                     value={activeTab} 
                     onChange={handleTabChange} 
                     radius="lg">
-                    <Tabs.List className='[&_button]:!text-xl [&_button]:!font-semibold mb-3 [&_button[data-active="true"]]:text-bright-sun-400 xs-mx:[&_button]:!text-sm xs-mx:[&_button]:!font-medium xs-mx:[&_button]:!px-1 xs-mx:[&_button]:!py-1.5 xs-mx:[&_button]:!mb-8'>
+                    <Tabs.List className='[&_button]:!text-xl [&_button]:!font-semibold  [&_button[data-active="true"]]:text-bright-sun-400 xs-mx:[&_button]:!text-sm xs-mx:[&_button]:!font-medium xs-mx:[&_button]:!px-1 xs-mx:[&_button]:!py-1.5 xs-mx:[&_button]:!mb-8'>
                         <Tabs.Tab value="APPLIED">Applied</Tabs.Tab>
                         <Tabs.Tab value="SAVED">Saved</Tabs.Tab>
                         <Tabs.Tab value="OFFERED">Offered</Tabs.Tab>
                         <Tabs.Tab value="INTERVIEWING">In Progress</Tabs.Tab>
                     </Tabs.List>
                     <Tabs.Panel value={activeTab} className='p-2'>
-                        <div className='justify-center flex flex-wrap gap-5 pt-10'>
+                        <div className='justify-center flex flex-wrap gap-5'>
                             { showList.length > 0 ? (
                                 showList.map((job: any, index: number) => (
                                     <Card key={index} {...job} {...{ [activeTab.toLowerCase()]: true }}/>

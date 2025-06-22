@@ -2,7 +2,7 @@ import axios, { InternalAxiosRequestConfig } from "axios";
 import navigateToLogin from "../Services/NavigateService";
 
 const axiosInstance = axios.create({
-    baseURL: "http://localhost:8080"
+    baseURL: "https://job-portal-backend-i3uk.onrender.com"
 });
 
 axiosInstance.interceptors.request.use(

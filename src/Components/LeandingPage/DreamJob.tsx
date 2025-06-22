@@ -6,7 +6,7 @@ const DreamJob = () => {
   return (
     <div className='flex flex-col md:flex-row items-center px-4 md:px-16'>
       {/* Left side */}
-      <div className='flex flex-col w-full md:w-[45%] mb-8 md:mb-0'>
+      <div className='flex flex-col w-full md:w-[45%] mb-8 md:mb-0 bs-mx:pt-8 bs-mx:w-[90%] bs-mx:mx-auto bs-mx:ml-10'>
         <div 
           className='text-4xl md:text-6xl font-bold text-mine-shaft-100 leading-tight [&>span]:text-bright-sun-500'>
           Find Your <span>Dream</span> <span>Job</span> With us
@@ -36,7 +36,7 @@ const DreamJob = () => {
     </div>
 
       {/* Right side */}
-      <div className='w-full md:w-[55%] flex justify-center items-center'>
+      <div className='hidden md:flex w-full md:w-[55%] bs-mx:w-[60%] justify-center items-center'>
         <div className='w-full md:w-[30rem] relative'>
           <img src="/Boy.png" alt="boy"/>
           <div className='absolute -right-10 w-fit top-[50%] border border-bright-sun-400 rounded-lg p-2 backdrop-blur-md '>

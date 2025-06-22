@@ -37,7 +37,7 @@ module.exports = {
         // Min-width breakpoints
         'xsm': '350px',
         'xs': '450px',
-        'sx':'500px',
+        'sx':'  500px',
         'sm': '640px',
         'md': '768px',
         'bs': '900px',

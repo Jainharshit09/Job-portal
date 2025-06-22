@@ -9,7 +9,7 @@ import '@mantine/notifications/styles.css';
 import '@mantine/dates/styles.css';
 import { BrowserRouter, Routes } from 'react-router-dom';
 import Header from './Components/Header/Header';
-// import Footer from './Components/LeandingPage/Footer';
+import Footer from './Components/LeandingPage/Footer';
 import AppRoutes from './Pages/AppRoutes';
 import { Notifications } from '@mantine/notifications';
 
@@ -40,7 +40,7 @@ function App() {
             <Header />
             <Divider mx="md" size="xs" color="mine-shaft.7" />
             <Routes>{AppRoutes()}</Routes>
-            {/* <Footer /> */}
+            <Footer />
           </div>
         </BrowserRouter>
     </MantineProvider>

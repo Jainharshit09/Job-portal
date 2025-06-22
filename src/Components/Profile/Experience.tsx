@@ -16,9 +16,9 @@ const Experience = () => {
   const experiences = Array.isArray(profile.experiences) ? profile.experiences : [];
 
   return (
-    <div>
-      <div className="text-2xl font-bold mb-5 flex justify-between">
-        Experience
+    <div className="w-full">
+      <div className="text-2xl sm:text-xl xsm:text-lg font-bold mb-5 flex flex-wrap justify-between items-center gap-2">
+        <span>Experience</span>
         <div className="flex gap-2">
           <ActionIcon
             color="bright-sun.3"
@@ -38,7 +38,7 @@ const Experience = () => {
           </ActionIcon>
         </div>
       </div>
-      <div className="flex flex-col gap-8">
+      <div className="flex flex-col gap-8 sm-mx:gap-5 xsm-mx:gap-3">
         {experiences.map((exp: any, index: number) => (
           <ExpCard key={index} index={index} {...exp} edit={edit} />
         ))}
